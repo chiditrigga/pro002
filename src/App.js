@@ -4,14 +4,21 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
+import Logo from "./images/Logo.svg"
+import poster from "./images/Poster.svg"
+import menu from "./images/Menu.svg"
+import imdb from "./images/IMDB.svg"
+import seeMore from "./images/See.svg"
+import Description from "./images/Description Box.svg"
 
 function App() {
   const [dett, setDett] = useState([]);
   const [movTitle, setMovTitle] = useState("");
-  const [totalMovie, setTotalMovie] = useState([])
-  const [fav,setFav] = useState(true)
+  const [totalMovie, setTotalMovie] = useState([]);
+  const [fav, setFav] = useState(true);
 
   const options = {
     method: "GET",
@@ -23,128 +30,113 @@ function App() {
   };
   useEffect(() => {
     fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/top_rated",
       options
     )
       .then((response) => response.json())
-      .then((response) => setDett(response.results))
+      .then((response) => {
+        setDett(response.results.slice(0,10));
+      })
       .catch((err) => console.error(err));
-  },[]);
+  }, []);
 
-  const subb = (e) => {
-    setFav(false)
-   e.preventDefault()
-  
+  const search = (e) => {
+    setFav(false);
+    e.preventDefault();
+
     fetch(
       `https://api.themoviedb.org/3/search/movie?query=${movTitle}&include_adult=false&language=en-US&page=1`,
       options
     )
       .then((response) => response.json())
-      .then((response) => setTotalMovie(response.results))
+      .then((response) => {
+        setDett(response.results);
+      })
       .catch((err) => console.error(err));
- 
- setMovTitle('')
 
-  }
+    setMovTitle("");
+    // console.log(totalMovie);
+  };
 
   return (
     <>
       <Container fluid>
-        <Row>
-          <Col>
-            <Card className="cc ">
-              <Card.Img src="" alt="Card image" />
-              <Card.ImgOverlay>
+        <Row className="header">
+          <Col xs={12} className="px-0">
+            <Card className="text-white ">
+             
+              <Card.ImgOverlay className="px-md-5">
                 <Card.Title>
                   {" "}
                   <Row>
-                   
-                   <Col xs={4}>
-                    MovieBox
-                   </Col>
+                    <Col xs={3} className="px-0"><Image className="px-0 " fluid src={Logo} /> <span className="text-start"></span>  </Col>
 
-                   <Col xs={4}>
-                   <Form onSubmit={e => subb(e)}>
-                  
-                  <Col>
-                    <Form.Control
-                      value={movTitle}
-                      onChange={(e) => setMovTitle(e.target.value)}
-                      placeholder="First name"
-                    />
-                  </Col>
-                
-              </Form>
-                   </Col>
+                    <Col xs={6}>
+                      <Form  onSubmit={(e) => search(e)}>
+                        <Col>
+                          <Form.Control
+                          className="search text-white"
+                            value={movTitle}
+                            onChange={(e) => setMovTitle(e.target.value)}
+                            placeholder="What do you want to watch?"
+                          />
+                        </Col>
+                      </Form>
+                    </Col>
 
-                   <Col xs={4} className="text-end">
-                    Sign in
-                   </Col>
-
-                 
-
+                    <Col xs={3}  className="px-0 text-end">
+                     <Image fluid src={menu} />
+                    </Col>
                   </Row>
-                
                 </Card.Title>
-                <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
+                <Row className="fill ">
+                  <Col className="d-flex align-items-end align-items-md-center">
+                   <Card.Text class=" " >
+                 <Image  src={Description} fluid />
+              
+                 
                 </Card.Text>
-                <Card.Text>Last updated 3 mins ago</Card.Text>
+                  </Col>
+                </Row>
+               
               </Card.ImgOverlay>
             </Card>
           </Col>
         </Row>
+        <Row className="mt-5 mb-4">
+          <Col xs={12} className="d-flex justify-content-between px-5">
+                 <span className="fs-3">Featured Movie</span> <span className="d-flex align-items-center text-danger">See more</span>
+          </Col>
+        </Row>
 
         <Row>
-          {fav && dett.map((res) => {
-            return (
-              <Col
-                key={res.id}
-                xs={12}
-                md={4}
-                xl={3}
-                className="d-flex justify-content-around"
-              >
-                <Card className="border-0" style={{ width: "18rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src={"https://image.tmdb.org/t/p/w500" + res.poster_path}
-                  />
-                  <Card.Body className="ps-0">
-                    <Card.Text>USA {res.release_date}</Card.Text>
-                    <Card.Title>{res.title}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          { dett.length > 0 ?
+            dett.map((res) => {
+              return (
+                <Col
+                  key={res.id}
+                  xs={12}
+                  md={4}
+                  xl={3}
+                  className="d-flex justify-content-around"
+                >
+                  <Card className="border-0" style={{ width: "18rem" }}>
+                    <Card.Img fluid className="w-100"
+                      variant="top"
+                      src={"https://image.tmdb.org/t/p/w500" + res.poster_path}
+                    />
+                    <Card.Body className="ps-0">
+                      <Card.Text>USA {res.release_date}</Card.Text>
+                      <Card.Title>{res.title}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            }): "loading"}
         </Row>
-      
+
         <Row>
-        {!fav && totalMovie.map((res) => {
-            return (
-              <Col
-                key={res.id}
-                xs={12}
-                md={4}
-                xl={3}
-                className="d-flex justify-content-around"
-              >
-                <Card className="border-0" style={{ width: "18rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src={"https://image.tmdb.org/t/p/w500" + res.poster_path}
-                  />
-                  <Card.Body className="ps-0">
-                    <Card.Text>USA {res.release_date}</Card.Text>
-                    <Card.Title>{res.title}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+       
         </Row>
       </Container>
     </>

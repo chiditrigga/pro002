@@ -1,7 +1,31 @@
 body{
   overflow-x: hidden;
+ 
 }
 
-.cc{
-  padding-top: 200px;
+.search{
+  background: transparent !important;
+  color: white !important;
+  
 }
+
+input::placeholder {
+  color: white !important;
+}
+
+.header{
+  height:100vh !important;
+ 
+  background-image: url('./images/Poster.svg') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+
+}
+
+.fill{
+  height: 90vh !important;
+}
+
+
