@@ -13,6 +13,8 @@ import menu from "./images/Menu.svg"
 import imdb from "./images/IMDB.svg"
 import seeMore from "./images/See.svg"
 import Description from "./images/Description Box.svg"
+import Icon from "./images/Icon.svg"
+import Tomatoes from "./images/Tomatoes.svg"
 
 function App() {
   const [dett, setDett] = useState([]);
@@ -104,7 +106,7 @@ function App() {
           </Col>
         </Row>
         <Row className="mt-5 mb-4">
-          <Col xs={12} className="d-flex justify-content-between px-5">
+          <Col xs={12} className="d-flex justify-content-between px-3">
                  <span className="fs-3">Featured Movie</span> <span className="d-flex align-items-center text-danger">See more</span>
           </Col>
         </Row>
@@ -118,16 +120,26 @@ function App() {
                   xs={12}
                   md={4}
                   xl={3}
-                  className="d-flex justify-content-around"
+                  className="d-flex justify-content-around pb-5"
                 >
-                  <Card className="border-0" style={{ width: "18rem" }}>
+                  <Card className="border-0" >
                     <Card.Img fluid className="w-100"
                       variant="top"
                       src={"https://image.tmdb.org/t/p/w500" + res.poster_path}
                     />
+                     <Card.ImgOverlay>
+       
+        <Card.Text className="text-end ">
+          <Image src={Icon} className="sec" />
+        </Card.Text>
+       
+      </Card.ImgOverlay>
                     <Card.Body className="ps-0">
                       <Card.Text>USA {res.release_date}</Card.Text>
                       <Card.Title>{res.title}</Card.Title>
+                      <Card.Text className="d-flex justify-content-between ">
+                      <Image src={imdb} /> <Image src={Tomatoes} />
+        </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

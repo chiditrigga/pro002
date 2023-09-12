@@ -28,4 +28,10 @@ input::placeholder {
   height: 90vh !important;
 }
 
+.sec{
+  border-radius: 50% !important;
+  border: 10px solid gray !important;
+  background: gray !important;
+}
+
 
