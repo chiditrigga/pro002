@@ -63,12 +63,12 @@ const options = {
 
           <Col md={2} className="side px-0 ">
             <div className="text-center py-3 " >
-         <Link style={{textDecoration: "none"}} to="/"><Image fluid  className="mx-auto" src={movie} /><span className="ps-5 ps-md-2 ps-lg-2">Movie Box</span> </Link>   
+         <Link style={{textDecoration: "none",color:"black"}} to="/"><Image fluid  className="mx-auto" src={movie} /><span className="ps-5 ps-md-2 ps-lg-2 fw-bold">Movie Box</span> </Link>   
             </div>
-              <div className="d-flex flex-column justify-content-around h-75 d-none d-sm-block">
+              <div style={{color:"rgba(102, 102, 102, 1)"}} className="d-flex flex-column justify-content-around h-75 d-none d-sm-block fw-bold">
                 
-                <div className="py-3 text-center"><Image fluid src={Home} /> Home</div>
-                <div style={{background:"rgba(190, 18, 60, 0.1)", borderRight: "6px solid rgba(190, 18, 60, 1)", padding: "2px 0px"}} className="py-3 text-center"><Image fluid src={group45} />Movies</div>
+                <div className="py-3 text-center "><Image fluid src={Home} /> Home</div>
+                <div style={{background:"rgba(190, 18, 60, 0.1)", borderRight: "6px solid rgba(190, 18, 60, 1)", padding: "2px 0px"}} className="py-3 text-center"><Image className="px-2" fluid src={group45} />Movies</div>
                 <div className="py-3 text-center"> <Image fluid src={Tv} /> TV Series</div>
                 <div className="py-3 text-center"><Image fluid src={Calendar} /> Upcoming</div>
                 <div className="py-3 text-center"></div>
@@ -91,7 +91,7 @@ const options = {
                
                    <div className="overview"> {movieDetails.overview} </div>
                    <div className="writers d-grid gap-2">
-                     <span>Director: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Joseph Kosinski</span> </span>
+                     <span className="py-1">Director: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Joseph Kosinski</span> </span>
                     <span>Writers: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Jim Cash, Jack Epps Jr, Peter Craig</span></span>  
                      <span>Stars: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Tom Cruise, Jennifer Connelly, Miles Teller</span> </span> 
                      </div>
