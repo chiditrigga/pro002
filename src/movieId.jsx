@@ -46,6 +46,7 @@ const options = {
         )
           .then((response) => response.json())
           .then((response) => {setMovieDetails(response)
+            
             setImgLoading(false)
          
           
@@ -55,7 +56,13 @@ const options = {
       }, []);
   
 
-       
+      const formatToUTCDate = (dateString) => {
+        const localDate = new Date(dateString);
+        const year=localDate.getUTCFullYear();
+        const month = (localDate.getUTCMonth() + 1).toString().padStart(2, '0');
+        const day = localDate.getUTCDate().toString().padStart(2,'0')
+        return `${year}-${month}-${day}`
+       }
     
    
 
