@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,6 +19,7 @@ import Tickets from './images/Tickets.svg'
 import Form from 'react-bootstrap/Form';
 import './side.css'
 import { Link } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
@@ -28,6 +28,7 @@ const MovieId = () => {
 const {id} = useParams()
 
 const[movieDetails,setMovieDetails] = useState({})
+const[imgLoading,setImgLoading] = useState(true)
 
 const options = {
     method: "GET",
@@ -45,7 +46,10 @@ const options = {
         )
           .then((response) => response.json())
           .then((response) => {setMovieDetails(response)
-            console.log(response)
+            setImgLoading(false)
+         
+          
+          
           })
           .catch((err) => console.error(err));
       }, []);
@@ -61,35 +65,51 @@ const options = {
 
      <Row>
 
-          <Col md={2} className="side px-0 ">
-            <div className="text-center py-3 " >
+          <Col md={2} className="side px-0 fi ">
+            <div className=" py-3 pb-0" >
          <Link style={{textDecoration: "none",color:"black"}} to="/"><Image fluid  className="mx-auto" src={movie} /><span className="ps-5 ps-md-2 ps-lg-2 fw-bold">Movie Box</span> </Link>   
             </div>
-              <div style={{color:"rgba(102, 102, 102, 1)"}} className="d-flex flex-column justify-content-around h-75 d-none d-sm-block fw-bold">
-                
-                <div className="py-3 text-center "><Image fluid src={Home} /> Home</div>
-                <div style={{background:"rgba(190, 18, 60, 0.1)", borderRight: "6px solid rgba(190, 18, 60, 1)", padding: "2px 0px"}} className="py-3 text-center"><Image className="px-2" fluid src={group45} />Movies</div>
-                <div className="py-3 text-center"> <Image fluid src={Tv} /> TV Series</div>
-                <div className="py-3 text-center"><Image fluid src={Calendar} /> Upcoming</div>
-                <div className="py-3 text-center"></div>
-                <div className="py-3 text-center"> <Image fluid src={logout} />Log out</div>
-              </div>
+              <Row style={{color:"rgba(102, 102, 102, 1)"}} className=" h-75 d-none d-sm-block fw-bold d-flex justify-content-center w-100 mx-auto" >
+                <Link style={{textDecoration: "none",color:"inherit"}}  to="/">
+                <Col xs={12} className="py-3 ps-2 changehov">
+                <Image fluid src={Home} className="pe-2" /> Home  
+                  </Col>
+                  </Link>
+                <Col xs={12} style={{background:"rgba(190, 18, 60, 0.1)", borderRight: "6px solid rgba(190, 18, 60, 1)"}} className="py-3 changehov"><Image className="pe-2 " fluid src={group45} /> <span className="text-baseline">Movies</span> </Col>
+                <Col xs={12} className="py-3 mt-2 changehov"> <Image className="" fluid src={Tv} /> TV Series </Col>
+                <Col xs={12} className="py-3 mt-2 changehov"><Image fluid src={Calendar} /> Upcoming</Col>
+                <Col  xs={12} className="py-3 mt-2">
+                  <div className="p-3" style={{border:"1px solid rgba(190, 18, 60, 0.7)",borderRadius:"20px"}}>
+                     <h6 className="fw-bolder">Play movie quizes and earn free tickets</h6> 
+                   <p className="fw-light">50k people are playing now</p>
+                   <div className="text-center pt-0 mt-0">
+                     <Button   style={{color:"rgba(190, 18, 60, 1)",background:"rgba(190, 18, 60, 0.2)",border:"rgba(190, 18, 60, 0.2)", borderRadius:"30px"}}>Start playing</Button>
+                   </div>
+                  
+                  </div>
+                  
+                </Col>
+                <Col xs={12} className=" changehov"> <Image fluid src={logout} /> Log out </Col>
+               
+              </Row>
 
           </Col>
 
           <Col md={10} className="main ">
                <Row>
                 <Col className="mx-auto text-center" md={12} >
-                    <Image  fluid style={{height:'60vh', width:'90%'}}  src={"https://image.tmdb.org/t/p/w500" + movieDetails.poster_path} />
+                    {imgLoading ? <div className="d-flex justify-content-center align-items-center" style={{height:'60vh', width:'90%'}}><Spinner animation="border "  /> </div> : <Image  fluid style={{height:'60vh', width:'90%',borderRadius:"20px"}} className="mt-2"  src={"https://image.tmdb.org/t/p/w500" + movieDetails.poster_path} />}
+                    
                 </Col>
                </Row>
                <Row className="mx-auto " style={{ width:'90%'}}>
                 <Col md={8} className="ps-0">
                     <div className="py-1">
-                            <span className="fw-bold">{movieDetails.title}</span> <span  className="fw-bold">{movieDetails.release_date}</span> <span  className="fw-bold">{movieDetails.runtime}m</span>
+                            <span className="fw-bold" data-testid= "movie-title">{movieDetails.title}</span> <span data-testid= "movie-release-date" className="fw-bold">{movieDetails.release_date}</span>
+                             <span  className="fw-bold" data-testid= "movie-runtime">{movieDetails.runtime}  </span>
                     </div>
                
-                   <div className="overview"> {movieDetails.overview} </div>
+                   <div className="overview" data-testid= "movie-overview"> {movieDetails.overview} </div>
                    <div className="writers d-grid gap-2">
                      <span className="py-1">Director: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Joseph Kosinski</span> </span>
                     <span>Writers: <span  style={{color:"rgba(190, 18, 60, 1)"}}>Jim Cash, Jack Epps Jr, Peter Craig</span></span>  
@@ -97,7 +117,7 @@ const options = {
                      </div>
                      <Row className="pt-2">
                         <Col md={4} className="px-0"> <Button style={{background:"rgba(190, 18, 60, 1)", borderColor:"rgba(190, 18, 60, 1)"}} className="w-100">Top rated movie#65</Button></Col>
-                        <Col md={8} className="ps-0">          <Form.Select className="w-100" aria-label="Default select example">
+                        <Col md={8} className="ps-0">          <Form.Select className="w-100 h-100" aria-label="Default select example">
       <option>Awards 9 nominations</option>
       <option value="1">Awards 9 nominations</option>
     </Form.Select></Col>

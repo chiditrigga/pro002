@@ -1,7 +1,38 @@
 .side{
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 1px 30px 30px 1px !important;
+    height: 100vh;
+    
   
 
 }
+.changehov{
+    cursor: pointer;
+}
+.changehov:hover{
+    background: rgba(190, 18, 60, 0.1) !important;
+}
 
+@media screen and (max-width: 768px) {
+    .side {
+      border: none;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .main{
+    padding-left: 200px !important;
+    width: 100%;
+  }
+  }
+  
+  .fi{
+    position: fixed !important;
+    width: 200px !important;
+    
+    
+  }
+
+
+
+  
