@@ -17,21 +17,24 @@
     .side {
       border: none;
     }
+    
   }
 
   @media screen and (min-width: 700px) {
     .main{
     padding-left: 200px !important;
     width: 100%;
+
   }
-  }
-  
   .fi{
     position: fixed !important;
     width: 200px !important;
     
     
   }
+  }
+  
+ 
 
 
 
