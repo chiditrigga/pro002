@@ -15,9 +15,9 @@ import Tomatoes from "./images/Tomatoes.svg";
 import { Link } from "react-router-dom";
 
 const Body = () => {
-  const [dett, setDett] = useState([]);
-  const [movTitle, setMovTitle] = useState("");
-  const [fav, setFav] = useState(true);
+  const [details, setDetails] = useState([]);
+  const [movieTitle, setMovTitle] = useState("");
+  const [favour, setFavour] = useState(true);
   const [state, setState] = useState("#D1D5DB");
 
 
@@ -34,22 +34,22 @@ const Body = () => {
     fetch("https://api.themoviedb.org/3/movie/top_rated", options)
       .then((response) => response.json())
       .then((response) => {
-        setDett(response.results.slice(0, 10));
+        setDetails(response.results.slice(0, 10));
       })
       .catch((err) => console.error(err));
   }, []);
 
   const search = (e) => {
-    setFav(false);
+    setFavour(false);
     e.preventDefault();
 
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${movTitle}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${movieTitle}&include_adult=false&language=en-US&page=1`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
-        setDett(response.results);
+        setDetails(response.results);
       })
       .catch((err) => console.error(err));
 
@@ -77,7 +77,7 @@ const Body = () => {
                         <Col>
                           <Form.Control
                             className="search text-white"
-                            value={movTitle}
+                            value={movieTitle}
                             onChange={(e) => setMovTitle(e.target.value)}
                             placeholder="What do you want to watch?"
                           />
@@ -103,7 +103,7 @@ const Body = () => {
         </Row>
         <Row className="mt-5 mb-4">
           <Col xs={12} className="d-flex justify-content-between px-3">
-            <span className="fs-3">Featured Movie</span>{" "}
+            <span className="fs-3">Featured Movies</span>{" "}
             <span className="d-flex align-items-center text-danger">
               See more
             </span>
@@ -111,8 +111,8 @@ const Body = () => {
         </Row>
 
         <Row>
-          {dett.length > 0
-            ? dett.map((res) => {
+          {details.length > 0
+            ? details.map((res) => {
                 return (
                   <Col
                     key={res.id}

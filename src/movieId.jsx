@@ -24,7 +24,7 @@ import Spinner from "react-bootstrap/Spinner";
 const MovieId = () => {
   const { id } = useParams();
 
-  const [movieDetails, setMovieDetails] = useState({});
+  const [movDetails, setMovDetails] = useState({});
   const [imgLoading, setImgLoading] = useState(true);
 
   const options = {
@@ -40,7 +40,7 @@ const MovieId = () => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, options)
       .then((response) => response.json())
       .then((response) => {
-        setMovieDetails(response);
+        setMovDetails(response);
 
         setImgLoading(false);
       })
@@ -145,7 +145,7 @@ const MovieId = () => {
                     className="mt-2"
                     src={
                       "https://image.tmdb.org/t/p/w500" +
-                      movieDetails.poster_path
+                      movDetails.poster_path
                     }
                   />
                 )}
@@ -155,20 +155,20 @@ const MovieId = () => {
               <Col md={8} className="ps-0">
                 <div className="py-1">
                   <span className="fw-bold" data-testid="movie-title">
-                    {movieDetails.title}
+                    {movDetails.title}
                   </span>
                   <span data-testid="movie-release-date" className="fw-bold px-5 ">
-                    {movieDetails.release_date}
+                    {movDetails.release_date}
                   </span>
                   <span className="fw-bold" data-testid="movie-runtime">
-                    {movieDetails.runtime}
+                    {movDetails.runtime}
                   </span>
                   m
                 </div>
 
                 <div className="overview" data-testid="movie-overview">
                   
-                  {movieDetails.overview}
+                  {movDetails.overview}
                 </div>
                 <div className="writers d-grid gap-2">
                   <span className="py-1">
